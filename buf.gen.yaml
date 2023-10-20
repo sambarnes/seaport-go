@@ -1,0 +1,12 @@
+version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: github.com/sambarnes/seaport-go/pkg
+plugins:
+  - name: go
+    out: pkg
+    opt: paths=source_relative
+  - name: connect-go
+    out: pkg
+    opt: paths=source_relative

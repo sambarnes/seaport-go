@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "proto/seaport/v1/types.proto";
+
+package proto.seaport.v1;
+
+/** Services and messages enabling EIP-4361 authentication via gRPC. */
+
+/** Reference: https://docs.login.xyz/ */
+
+service AuthService {
+  /** Returns an EIP-4361 nonce for session and invalidates existing session*/
+  rpc Nonce (Empty) returns (NonceResponse);
+
+  /** Verifies the SignedMessage is valid and returns the verified address*/
+  rpc Verify (VerifyRequest) returns (H160);
+
+  /** Used to check if a given connection is authenticated, returns the address which is authenticated for a nonce cookie*/
+  rpc Authenticate (Empty) returns (H160);
+}
+
+/** Nonce response message containing the generated `nonce` string. */
+message NonceResponse {
+  string nonce = 1;
+}
+
+/** TODO(Does it need to be json encoded in protobuf?) */
+/** Verify request message containing the message & signature from a SIWE challenge. */
+message VerifyRequest {
+  string message = 1;
+  string signature = 2;
+}
